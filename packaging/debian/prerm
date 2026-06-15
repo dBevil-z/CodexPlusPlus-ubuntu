@@ -1,0 +1,12 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+  remove|deconfigure)
+    /usr/bin/codex-plus-plus disable >/dev/null 2>&1 || true
+    ;;
+esac
+
+#DEBHELPER#
+
+exit 0
