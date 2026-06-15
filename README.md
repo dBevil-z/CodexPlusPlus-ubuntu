@@ -30,7 +30,7 @@ Requirements:
 Build the package:
 
 ```bash
-./packaging/debian/build-deb.sh
+bash ./packaging/debian/build-deb.sh
 ```
 
 The script will:
