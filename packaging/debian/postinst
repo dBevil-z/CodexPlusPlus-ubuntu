@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+  configure)
+    echo "Applying Codex++ injection for codex-desktop..."
+    /usr/bin/codex-plus-plus apply
+    ;;
+  triggered)
+    /usr/bin/codex-plus-plus hook-reapply || true
+    ;;
+esac
+
+#DEBHELPER#
+
+exit 0
