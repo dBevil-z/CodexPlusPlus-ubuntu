@@ -2,16 +2,44 @@
 
 set -euo pipefail
 
-VERSION="${VERSION:-1.2.4-1}"
-UPSTREAM_VERSION="${UPSTREAM_VERSION:-1.2.4}"
+VERSION="${VERSION:-}"
+UPSTREAM_VERSION="${UPSTREAM_VERSION:-}"
+PKG_RELEASE="${PKG_RELEASE:-1}"
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 BUILD_DIR="${ROOT_DIR}/build"
-TARBALL_PATH="${BUILD_DIR}/codex-plus-plus-${UPSTREAM_VERSION}.tar.gz"
+PKG_NAME="codex-plus-plus"
+UPSTREAM_REPO_URL="https://github.com/BigPizzaV3/CodexPlusPlus.git"
 SRC_DIR="${SRC_DIR:-${BUILD_DIR}/src}"
 STAGE_DIR="${ROOT_DIR}/build/deb-root"
 DIST_DIR="${ROOT_DIR}/dist"
-PKG_NAME="codex-plus-plus"
-UPSTREAM_URL="https://github.com/BigPizzaV3/CodexPlusPlus/archive/refs/tags/v${UPSTREAM_VERSION}.tar.gz"
+TARBALL_PATH=""
+UPSTREAM_URL=""
+
+resolve_upstream_version() {
+  if [[ -n "${UPSTREAM_VERSION}" ]]; then
+    return
+  fi
+
+  UPSTREAM_VERSION="$(
+    git ls-remote --tags "${UPSTREAM_REPO_URL}" 'refs/tags/v*' \
+      | awk -F/ '/refs\/tags\/v[0-9]+\.[0-9]+\.[0-9]+$/ {print $3}' \
+      | sed 's/^v//' \
+      | sort -V \
+      | tail -n1
+  )"
+
+  if [[ -z "${UPSTREAM_VERSION}" ]]; then
+    echo "Failed to resolve the latest upstream version from ${UPSTREAM_REPO_URL}" >&2
+    exit 1
+  fi
+}
+
+resolve_package_metadata() {
+  resolve_upstream_version
+  VERSION="${VERSION:-${UPSTREAM_VERSION}-${PKG_RELEASE}}"
+  TARBALL_PATH="${BUILD_DIR}/codex-plus-plus-${UPSTREAM_VERSION}.tar.gz"
+  UPSTREAM_URL="https://github.com/BigPizzaV3/CodexPlusPlus/archive/refs/tags/v${UPSTREAM_VERSION}.tar.gz"
+}
 
 prepare_source() {
   install -dm755 "${BUILD_DIR}"
@@ -31,6 +59,7 @@ build_launcher() {
   cargo build --release --locked -p codex-plus-launcher --manifest-path "${SRC_DIR}/Cargo.toml"
 }
 
+resolve_package_metadata
 prepare_source
 build_launcher
 
