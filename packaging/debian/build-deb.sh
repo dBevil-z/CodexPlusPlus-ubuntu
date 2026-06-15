@@ -45,7 +45,7 @@ install -dm755 \
   "${STAGE_DIR}/usr/bin" \
   "${STAGE_DIR}/usr/lib/${PKG_NAME}/app" \
   "${STAGE_DIR}/usr/lib/${PKG_NAME}/bin" \
-  "${STAGE_DIR}/usr/lib/${PKGNAME}/upstream" \
+  "${STAGE_DIR}/usr/lib/${PKG_NAME}/upstream" \
   "${STAGE_DIR}/usr/lib/${PKG_NAME}/webview" \
   "${STAGE_DIR}/usr/share/doc/${PKG_NAME}" \
   "${STAGE_DIR}/var/lib/${PKG_NAME}" \
