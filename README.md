@@ -9,11 +9,14 @@ for the Ubuntu `codex-desktop` layout:
 The packaging is based on the Arch AUR package
 `codex-plus-plus`, then adapted for Debian/Ubuntu.
 
+Prebuilt `.deb` files can be generated locally from this repository. The GitHub
+repository itself keeps the packaging source and build instructions.
+
 ## Repository Layout
 
 - `packaging/debian/`: Debian package metadata, wrapper scripts, and the build script
 - `packaging/aur/`: AUR-derived patches and webview asset used during packaging
-- `dist/`: prebuilt `.deb` artifacts
+- `dist/`: local build output directory used by `build-deb.sh`
 
 ## Build
 
