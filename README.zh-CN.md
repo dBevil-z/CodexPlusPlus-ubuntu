@@ -15,7 +15,7 @@
 
 - 基于 Arch AUR `codex-plus-plus` 打包思路改造成 Debian/Ubuntu 版本
 - 适配 Ubuntu `codex-desktop` 目录结构的启动包装和注入脚本
-- 可重复构建：自动下载上游 `v1.2.4`、打补丁、编译 launcher、生成 `.deb`
+- 可重复构建：默认自动获取上游最新稳定 tag、打补丁、编译 launcher、生成 `.deb`
 
 ## 快速开始
 
@@ -28,7 +28,7 @@ bash ./packaging/debian/build-deb.sh
 安装：
 
 ```bash
-sudo apt install ./dist/codex-plus-plus_1.2.4-1_amd64.deb
+sudo apt install ./dist/codex-plus-plus_*_amd64.deb
 ```
 
 管理注入状态：
@@ -50,12 +50,24 @@ sudo codex-plus-plus enable
 
 构建脚本会依次完成：
 
-1. 下载 `BigPizzaV3/CodexPlusPlus` 的 `v1.2.4` 源码
+1. 自动解析上游最新稳定 `v*` tag
 2. 应用仓库内附带的 AUR 补丁
 3. 以 release 模式编译 Rust launcher
-4. 生成 `codex-plus-plus_1.2.4-1_amd64.deb`
+4. 生成 `codex-plus-plus_<upstream>-<pkgrel>_amd64.deb`
 
 构建产物会输出到 [`dist/`](./dist/) 目录。
+
+如果你想固定到某个上游版本，而不是默认取最新版本：
+
+```bash
+UPSTREAM_VERSION=1.2.8 bash ./packaging/debian/build-deb.sh
+```
+
+如果你想手动指定 Debian 包版本号：
+
+```bash
+VERSION=1.2.8-2 bash ./packaging/debian/build-deb.sh
+```
 
 ## 仓库结构
 
