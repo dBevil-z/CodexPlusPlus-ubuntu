@@ -1,0 +1,11 @@
+Package: codex-plus-plus
+Version: @VERSION@
+Section: utils
+Priority: optional
+Architecture: amd64
+Depends: bash, codex-desktop, procps, python3
+Maintainer: local <root@localhost>
+Homepage: https://github.com/BigPizzaV3/CodexPlusPlus
+Description: Codex++ auto-injector bridge for Codex Desktop
+ Codex++ launcher and webview helper packaged for the Debian/Ubuntu
+ codex-desktop layout under /opt/codex-desktop.
