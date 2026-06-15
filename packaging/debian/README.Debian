@@ -1,0 +1,16 @@
+This local Debian package adapts Codex++ for the Codex Desktop Linux package
+layout used by Ubuntu installs:
+
+  /usr/bin/codex-desktop
+  /opt/codex-desktop/start.sh
+
+The package injects /usr/bin/codex-desktop by replacing it with a symlink to
+/usr/bin/codex-plus-plus, while keeping a backup at:
+
+  /usr/lib/codex-plus-plus/upstream/codex-desktop
+
+Useful commands:
+
+  sudo codex-plus-plus status
+  sudo codex-plus-plus disable
+  sudo codex-plus-plus enable
