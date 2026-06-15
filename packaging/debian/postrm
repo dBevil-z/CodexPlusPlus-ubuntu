@@ -1,0 +1,12 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+  purge)
+    rm -rf /var/lib/codex-plus-plus
+    ;;
+esac
+
+#DEBHELPER#
+
+exit 0
